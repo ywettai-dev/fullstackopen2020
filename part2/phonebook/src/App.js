@@ -51,21 +51,23 @@ const App = () => {
     const checkSameName = persons.map(person => person.name).indexOf(newName);
     if(checkSameName > -1) {
       const sameNameIndex = persons[checkSameName];
-      window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`);
-      personService
-      .update(sameNameIndex.id, personObject)
-      .then(returnedObject => {
-        setPersons(persons
-          .map(person => person.id !== sameNameIndex.id 
-            ? person 
-            : returnedObject
-          )
-        );
-        successText(`Updated ${newName} information`);
-      })
-      .catch(error => {
-        errorText(`Information of '${newName}' was already removed from the server.`);
-      })
+      const clickedConfirm = window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`);
+      if (clickedConfirm) {
+        personService
+        .update(sameNameIndex.id, personObject)
+        .then(returnedObject => {
+          setPersons(persons
+            .map(person => person.id !== sameNameIndex.id 
+              ? person 
+              : returnedObject
+            )
+          );
+          successText(`Updated ${newName} information`);
+        })
+        .catch(error => {
+          errorText(`Information of '${newName}' was already removed from the server.`);
+        })
+      }
     }else {
       personService
       .create(personObject)
