@@ -32,7 +32,8 @@ const App = () => {
     }, 5000);
   }
   
-  const errorText = message => {
+  const errorText = (responseError, defaultError) => {
+    const message = responseError.response.data ? `Error: ${responseError.response.data.error}` : defaultError
     setErrorMessage(message);
     setTimeout(() => {
       setErrorMessage(null);
@@ -75,7 +76,8 @@ const App = () => {
         setNewNum('');
       })
       .catch(error => {
-        errorText(error.message);
+        console.log(error.response.data.error)
+        errorText(error, error.message)
       })
     }
   };
