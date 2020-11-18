@@ -7,12 +7,14 @@ const cors = require('cors')
 const Blog = require('./models/blog')
 const logger = require('./utils/logger')
 const config = require('./utils/config')
+const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 app.use(cors())
 app.use(express.json())
+app.use(middleware.requestLogger)
 
 app.get('/api/blogs', (req, res) => {
     Blog
@@ -38,6 +40,9 @@ app.post('/api/blogs', (req, res) => {
             res.status(201).json(result)
         })
 })
+
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 app.listen(config.PORT, () => {
     console.log(`Server running on PORT ${config.PORT}`)
