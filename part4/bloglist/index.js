@@ -5,11 +5,11 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const Blog = require('./models/blog')
+const logger = require('./utils/logger')
+const config = require('./utils/config')
 const mongoose = require('mongoose')
 
-const url = process.env.MONGODB_URI
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 app.use(cors())
 app.use(express.json())
@@ -39,8 +39,6 @@ app.post('/api/blogs', (req, res) => {
         })
 })
 
-const PORT = process.env.PORT
-
-app.listen(PORT, () => {
-    console.log(`Server running on PORT ${PORT}`)
+app.listen(config.PORT, () => {
+    console.log(`Server running on PORT ${config.PORT}`)
 })
