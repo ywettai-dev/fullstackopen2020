@@ -1,49 +1,10 @@
-/* eslint-disable no-unused-vars */
-require('dotenv').config()
+const app = require('./app')
 const http = require('http')
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const Blog = require('./models/blog')
-const logger = require('./utils/logger')
 const config = require('./utils/config')
-const middleware = require('./utils/middleware')
-const mongoose = require('mongoose')
+const logger = require('./utils/logger')
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+const server = http.createServer(app)
 
-app.use(cors())
-app.use(express.json())
-app.use(middleware.requestLogger)
-
-app.get('/api/blogs', (req, res) => {
-    Blog
-        .find({})
-        .then(blogs => {
-            res.json(blogs)
-        })
-})
-
-app.post('/api/blogs', (req, res) => {
-    const body = req.body
-
-    const blog = new Blog({
-        title: body.title,
-        author: body.author,
-        url: body.url,
-        likes: body.likes
-    })
-
-    blog
-        .save()
-        .then(result => {
-            res.status(201).json(result)
-        })
-})
-
-app.use(middleware.unknownEndpoint)
-app.use(middleware.errorHandler)
-
-app.listen(config.PORT, () => {
-    console.log(`Server running on PORT ${config.PORT}`)
+server.listen(config.PORT, () => {
+    logger.info(`Server running on PORT ${config.PORT}`)
 })
