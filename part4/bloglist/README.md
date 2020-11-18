@@ -1,0 +1,1 @@
+# Simple blog list application
