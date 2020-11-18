@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config()
 const http = require('http')
 const express = require('express')
@@ -23,20 +24,20 @@ app.use(express.json())
 
 app.get('/api/blogs', (req, res) => {
     Blog
-    .find({})
-    .then(blogs => {
-        res.json(blogs)
-    })
+        .find({})
+        .then(blogs => {
+            res.json(blogs)
+        })
 })
 
 app.post('/api/blogs', (req, res) => {
     const blog = new Blog(req.body)
 
     blog
-    .save()
-    .then(result => {
-        res.status(201).json(result)
-    })
+        .save()
+        .then(result => {
+            res.status(201).json(result)
+        })
 })
 
 const PORT = process.env.PORT
