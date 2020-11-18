@@ -31,7 +31,14 @@ app.get('/api/blogs', (req, res) => {
 })
 
 app.post('/api/blogs', (req, res) => {
-    const blog = new Blog(req.body)
+    const body = req.body
+
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes
+    })
 
     blog
         .save()
