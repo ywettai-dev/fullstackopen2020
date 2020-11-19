@@ -1,4 +1,4 @@
-const { dummy, totalLikes } = require('../utils/list_helper')
+const { dummy, totalLikes, favoriteBlog } = require('../utils/list_helper')
 
 const blogs = [
     {
@@ -76,5 +76,21 @@ describe('total likes', () => {
         const result = totalLikes(blogs)
 
         expect(result).toBe(36)
+    })
+})
+
+// favorite blog test
+describe('favorite blog', () => {
+    // one of the top favorite blogs
+    const mostFavoriteBlog = {
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        likes: 12
+    }
+
+    test('one of the top favorite blogs', () => {
+        const result = favoriteBlog(blogs)
+
+        expect(result).toEqual(mostFavoriteBlog)
     })
 })
