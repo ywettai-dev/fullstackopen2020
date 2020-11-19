@@ -35,6 +35,7 @@ const mostBlog = (blogs) => {
 // most likes which author got
 const mostLikes = (blogs) => {
     const reducer = (acc, curr) => {
+        //console.log(acc, curr)
         return !acc[curr.author]
             ? { ...acc, [curr.author] : curr.likes }
             : { ...acc, [curr.author] : acc[curr.author] +  curr.likes }
