@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+const _ = require('lodash')
 // dummy test case
 const dummy = (blogs) => {
     return 1
@@ -22,8 +23,18 @@ const favoriteBlog = (blogs) => {
     return blogs.reduce(reducer, 0)
 }
 
+// most blog for author who has the largest amount of blogs
+const mostBlog = (blogs) => {
+    const authorBlog = _.chain(_.countBy(blogs, 'author'))
+        .toPairs()
+        .maxBy(_.last)
+        .value()
+    return { author: authorBlog[0], blogs: authorBlog[1] }
+}
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlog
 }
