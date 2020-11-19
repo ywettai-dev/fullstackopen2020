@@ -39,7 +39,7 @@ const mostLikes = (blogs) => {
             ? { ...acc, [curr.author] : curr.likes }
             : { ...acc, [curr.author] : acc[curr.author] +  curr.likes }
     }
-    const likesCount = _.reduce(blogs, reducer, {})
+    const likesCount = blogs.reduce(reducer, {})
 
     const mostLikesAuthor = _.chain(likesCount)
         .toPairs()
