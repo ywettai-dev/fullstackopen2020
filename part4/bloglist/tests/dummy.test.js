@@ -1,10 +1,10 @@
-const listHelper = require('../utils/list_helper')
+const { dummy } = require('../utils/list_helper')
 
-describe('dummy', () => {
+describe('dummy test', () => {
     test('dummy returns one', () => {
         const blogs = []
 
-        const result = listHelper.dummy(blogs)
+        const result = dummy(blogs)
 
         expect(result).toBe(1)
     })
